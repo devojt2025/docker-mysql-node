@@ -8,7 +8,7 @@ services:
       MYSQL_HOST: mysql
       MYSQL_USER: root
       MYSQL_PASSWORD: ""
-      MYSQL_DATABASE: notes
+      MYSQL_DATABASE: foodpanda_new_2
     depends_on:
       - mysql
     networks:
@@ -21,7 +21,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: notes
+      MYSQL_DATABASE: foodpanda_new_2
       MYSQL_USER: user
       MYSQL_PASSWORD: userpass
     volumes:
