@@ -10,9 +10,12 @@ services:
       MYSQL_PASSWORD: ""
       MYSQL_DATABASE: foodpanda_new_2
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+        restart: true
     networks:
       - app-network
+   
 
   mysql:
     image: mysql:8.0
@@ -28,9 +31,15 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
 
 volumes:
   mysql-data:
-
+  
 networks:
   app-network:

@@ -1,12 +1,14 @@
 # Example Node.js backend Dockerfile
 FROM node:22
 
-WORKDIR .
+WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
 
 COPY . .
 
+
+RUN chmod +x docker-entrypoint.sh
 EXPOSE 3000
-CMD ["node", "index.js"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
