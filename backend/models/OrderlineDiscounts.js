@@ -14,9 +14,7 @@ const OrderlineDiscounts = sequelize.define('OrderlineDiscounts', {
   tableName: 'orderline_discount',
   paranoid: true,
   timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  deletedAt: 'deleted_at',
+ 
 });
 
 export default OrderlineDiscounts;

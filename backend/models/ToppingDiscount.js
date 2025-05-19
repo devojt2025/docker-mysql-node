@@ -14,9 +14,7 @@ const ToppingsDiscount = sequelize.define('ToppingsDiscount', {
   tableName: 'toppings_discount',
   paranoid: true,
   timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  deletedAt: 'deleted_at',
+ 
 });
 
 export default ToppingsDiscount;

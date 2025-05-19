@@ -14,9 +14,7 @@ const DeliveryFee = sequelize.define('DeliveryFee', {
   tableName: 'delivery_fee',
   paranoid: true,
   timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  deletedAt: 'deleted_at',
+  
 });
 
 export default DeliveryFee;

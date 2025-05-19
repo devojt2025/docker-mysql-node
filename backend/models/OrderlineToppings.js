@@ -19,9 +19,7 @@ const OrderlineToppings = sequelize.define('OrderlineToppings', {
   tableName: 'orderline_toppings',
   paranoid: true,
   timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  deletedAt: 'deleted_at',
+ 
 });
 
 export default OrderlineToppings;

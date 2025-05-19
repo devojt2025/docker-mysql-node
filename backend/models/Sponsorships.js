@@ -16,9 +16,7 @@ const Sponsorships = sequelize.define('Sponsorships', {
   tableName: 'sponsorships',
   paranoid: true,
   timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  deletedAt: 'deleted_at',
+  
 });
 
 export default Sponsorships;

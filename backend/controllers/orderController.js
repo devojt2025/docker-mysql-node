@@ -6,6 +6,7 @@ import OrderlineToppings from '../models/OrderlineToppings.js';
 import ToppingDiscounts from '../models/ToppingDiscount.js';
 import Sponsorships from '../models/Sponsorships.js';
 import DeliveryFee from '../models/DeliveryFee.js';
+import sequelize from '../config/database.js';
 
 const getClientIP = (req) => {
   return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -117,7 +118,7 @@ export const receiveOrder = async (req, res) => {
       picked_up: data.callbackUrls?.orderPickedUpUrl,
       prepared_url: data.callbackUrls?.orderPreparedUrl,
       expire_at: data.expiryDate,
-      created_at: data.createdAt,
+      createdAt: data.createdAt,
     });
 
     for (const discount of data.discounts || []) {
@@ -178,3 +179,13 @@ export const receiveOrder = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
+export const testDB = async (req, res) => {
+    try{
+      await sequelize.authenticate()
+      console.log('Database connected');
+    }catch (error) {
+      console.log('Unable to connect to the database: ', error);
+    }
+}
