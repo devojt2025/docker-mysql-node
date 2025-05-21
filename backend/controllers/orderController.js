@@ -85,7 +85,7 @@ export const receiveOrder = async (req, res) => {
       collect_from_customer: data.price?.collectFromCustomer,
       payment_type: data.payment?.type,
       payment_status: data.payment?.status,
-      expeditionType: data.expeditionType,
+      expedition_type: data.expeditionType,
       expected_delivery_time: data.delivery?.expectedDeliveryTime,
       express_delivery: data.delivery?.expressDelivery,
       rider_pickup_time: data.delivery?.riderPickupTime,

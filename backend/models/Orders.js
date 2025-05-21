@@ -22,7 +22,7 @@ const Orders = sequelize.define('Orders', {
   collect_from_customer: DataTypes.FLOAT,
   payment_type: DataTypes.STRING,
   payment_status: DataTypes.STRING,
-  expeditionType: DataTypes.STRING,
+  expedition_type: DataTypes.STRING,
   expected_delivery_time: DataTypes.DATE,
   express_delivery: DataTypes.BOOLEAN,
   rider_pickup_time: DataTypes.DATE,

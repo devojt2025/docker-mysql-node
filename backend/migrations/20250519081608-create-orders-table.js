@@ -23,7 +23,7 @@ export default {
       collect_from_customer: Sequelize.TEXT,
       payment_type: Sequelize.TEXT,
       payment_status: Sequelize.TEXT,
-      expeditionType: Sequelize.TEXT,
+      expedition_type: Sequelize.TEXT,
       expected_delivery_time: Sequelize.DATE,
       express_delivery: Sequelize.TINYINT,
       rider_pickup_time: Sequelize.DATE,
