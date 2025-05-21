@@ -17,9 +17,9 @@ const OrderlineToppings = sequelize.define('OrderlineToppings', {
   remote_code: DataTypes.STRING,
 }, {
   tableName: 'orderline_toppings',
-  paranoid: true,
   timestamps: true,
- 
+  underscored: true,
+  paranoid: true,
 });
 
 export default OrderlineToppings;

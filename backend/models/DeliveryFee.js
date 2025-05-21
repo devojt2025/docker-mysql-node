@@ -12,9 +12,9 @@ const DeliveryFee = sequelize.define('DeliveryFee', {
   value: DataTypes.FLOAT,
 }, {
   tableName: 'delivery_fee',
-  paranoid: true,
   timestamps: true,
-  
+  underscored: true,
+  paranoid: true,
 });
 
 export default DeliveryFee;

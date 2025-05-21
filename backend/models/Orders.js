@@ -61,7 +61,9 @@ const Orders = sequelize.define('Orders', {
   prepared_url: DataTypes.STRING,
 }, {
   tableName: 'orders',
-  paranoid: true
+  timestamps: true,
+  underscored: true,
+  paranoid: true,
 });
 
 export default Orders;

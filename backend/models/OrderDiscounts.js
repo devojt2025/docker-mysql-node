@@ -21,9 +21,9 @@ const OrderDiscounts = sequelize.define('OrderDiscounts', {
   },
 }, {
   tableName: 'order_discounts',
-  paranoid: true,             // enables soft deletes with deleted_at
-  timestamps: true,           // enables created_at and updated_at
-  
+  timestamps: true,
+  underscored: true,
+  paranoid: true,  
 });
 
 export default OrderDiscounts;

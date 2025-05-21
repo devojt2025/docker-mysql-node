@@ -21,9 +21,9 @@ const Orderline = sequelize.define('Orderline', {
   item_unavailability_handling: DataTypes.STRING,
 }, {
   tableName: 'orderline',
-  paranoid: true,
   timestamps: true,
-  
+  underscored: true,
+  paranoid: true,
 });
 
 export default Orderline;

@@ -12,9 +12,9 @@ const OrderlineDiscounts = sequelize.define('OrderlineDiscounts', {
   amount: DataTypes.FLOAT,
 }, {
   tableName: 'orderline_discount',
-  paranoid: true,
   timestamps: true,
- 
+  underscored: true,
+  paranoid: true,
 });
 
 export default OrderlineDiscounts;

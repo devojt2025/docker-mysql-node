@@ -17,8 +17,9 @@ const Sponsorships = sequelize.define(
   },
   {
     tableName: "sponsorships",
-    paranoid: true,
-    timestamps: true,
+  timestamps: true,
+  underscored: true,
+  paranoid: true,
   }
 );
 
