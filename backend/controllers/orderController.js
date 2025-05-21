@@ -122,7 +122,7 @@ export const receiveOrder = async (req, res) => {
       picked_up: data.callbackUrls?.orderPickedUpUrl,
       prepared_url: data.callbackUrls?.orderPreparedUrl,
       expire_at: data.expiryDate,
-      created_at: data.created_at,
+      created_at: data.createdAt,
     });
 
     for (const discount of data.discounts || []) {
