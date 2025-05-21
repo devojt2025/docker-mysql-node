@@ -7,6 +7,16 @@ export default {
         autoIncrement: true,
         primaryKey: true,
       },
+      orderline_topping_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'orderline_toppings',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'NO ACTION',
+      },
       name: {
         type: Sequelize.STRING(100),
         allowNull: true,
@@ -17,34 +27,24 @@ export default {
         allowNull: true,
         defaultValue: null,
       },
-      orderline_toppings_id: {
-        type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: false,
-        references: {
-          model: 'orderline_toppings',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'NO ACTION',
-      },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
     });
 
-    await queryInterface.addIndex('toppings_discount', ['orderline_toppings_id'], {
+    await queryInterface.addIndex('toppings_discount', ['orderline_topping_id'], {
       name: 'fk_toppings_discount_orderline_toppings1_idx',
     });
   },

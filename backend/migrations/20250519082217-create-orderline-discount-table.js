@@ -7,16 +7,6 @@ export default {
         allowNull: false,
         primaryKey: true,
       },
-      name: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        defaultValue: null,
-      },
-      amount: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: true,
-        defaultValue: null,
-      },
       orderline_id: {
         type: Sequelize.BIGINT.UNSIGNED,
         allowNull: false,
@@ -27,17 +17,27 @@ export default {
         onDelete: 'CASCADE',
         onUpdate: 'NO ACTION',
       },
-      createdAt: {
+      name: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+        defaultValue: null,
+      },
+      amount: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: true,
+        defaultValue: null,
+      },
+      created_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,

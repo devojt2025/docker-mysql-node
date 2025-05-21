@@ -1,11 +1,21 @@
 export default {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('delivery_fee', {
+    await queryInterface.createTable("delivery_fee", {
       id: {
         type: Sequelize.BIGINT.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
+      },
+      order_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: "orders",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "NO ACTION",
       },
       name: {
         type: Sequelize.STRING(100),
@@ -17,39 +27,29 @@ export default {
         allowNull: true,
         defaultValue: null,
       },
-      orders_id: {
-        type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: false,
-        references: {
-          model: 'orders',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'NO ACTION',
-      },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
     });
 
-    await queryInterface.addIndex('delivery_fee', ['orders_id'], {
-      name: 'fk_delivery_fee_orders1_idx',
+    await queryInterface.addIndex("delivery_fee", ["order_id"], {
+      name: "fk_delivery_fee_orders1_idx",
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('delivery_fee');
+    await queryInterface.dropTable("delivery_fee");
   },
 };

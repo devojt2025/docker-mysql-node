@@ -7,6 +7,16 @@ export default {
         allowNull: false,
         primaryKey: true,
       },
+      order_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'orders',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'NO ACTION',
+      },
       name: {
         type: Sequelize.STRING(100),
         allowNull: true,
@@ -17,34 +27,24 @@ export default {
         allowNull: true,
         defaultValue: null,
       },
-      orders_id: {
-        type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: false,
-        references: {
-          model: 'orders',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'NO ACTION',
-      },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
     });
 
-    await queryInterface.addIndex('order_discounts', ['orders_id'], {
+    await queryInterface.addIndex('order_discounts', ['order_id'], {
       name: 'fk_order_discounts_orders1_idx',
     });
   },

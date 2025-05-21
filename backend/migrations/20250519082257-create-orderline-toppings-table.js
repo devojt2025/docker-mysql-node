@@ -7,6 +7,27 @@ export default {
         allowNull: false,
         primaryKey: true,
       },
+      orderline_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'orderline',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'NO ACTION',
+      },
+      parent_topping_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: true,
+        defaultValue: null,
+        references: {
+          model: 'orderline_toppings',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'NO ACTION',
+      },
       topping_id: {
         type: Sequelize.STRING(255),
         allowNull: false,
@@ -36,38 +57,17 @@ export default {
         allowNull: true,
         defaultValue: null,
       },
-      parent_toppings_id: {
-        type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: true,
-        defaultValue: null,
-        references: {
-          model: 'orderline_toppings',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'NO ACTION',
-      },
-      orderline_id: {
-        type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: false,
-        references: {
-          model: 'orderline',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'NO ACTION',
-      },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
@@ -75,7 +75,7 @@ export default {
     });
 
     // Add indexes
-    await queryInterface.addIndex('orderline_toppings', ['parent_toppings_id'], {
+    await queryInterface.addIndex('orderline_toppings', ['parent_topping_id'], {
       name: 'fk_orderline_toppings_orderline_toppings1_idx',
     });
     await queryInterface.addIndex('orderline_toppings', ['orderline_id'], {

@@ -60,9 +60,9 @@ export default {
       picked_up: Sequelize.TEXT,
       prepared_url: Sequelize.TEXT,
       expire_at: Sequelize.DATE,
-      createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE,
-      deletedAt: Sequelize.DATE,
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
+      deleted_at: Sequelize.DATE,
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_unicode_ci',
