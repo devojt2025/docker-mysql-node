@@ -8,20 +8,20 @@ import Sponsorships from './Sponsorships.js';
 import DeliveryFee from './DeliveryFee.js';
 
 // Orders and OrderDiscounts
-Orders.hasMany(OrderDiscounts, { foreignKey: 'orders_id' });
-OrderDiscounts.belongsTo(Orders, { foreignKey: 'orders_id' });
+Orders.hasMany(OrderDiscounts, { foreignKey: 'order_id' });
+OrderDiscounts.belongsTo(Orders, { foreignKey: 'order_id' });
 
 // OrderDiscounts and Sponsorships
-OrderDiscounts.hasMany(Sponsorships, { foreignKey: 'order_discounts_id' });
-Sponsorships.belongsTo(OrderDiscounts, { foreignKey: 'order_discounts_id' });
+OrderDiscounts.hasMany(Sponsorships, { foreignKey: 'order_discount_id' });
+Sponsorships.belongsTo(OrderDiscounts, { foreignKey: 'order_discount_id' });
 
 // Orders and DeliveryFee
-Orders.hasMany(DeliveryFee, { foreignKey: 'orders_id' });
-DeliveryFee.belongsTo(Orders, { foreignKey: 'orders_id' });
+Orders.hasMany(DeliveryFee, { foreignKey: 'order_id' });
+DeliveryFee.belongsTo(Orders, { foreignKey: 'order_id' });
 
 // Orders and Orderline
-Orders.hasMany(Orderline, { foreignKey: 'orders_id' });
-Orderline.belongsTo(Orders, { foreignKey: 'orders_id' });
+Orders.hasMany(Orderline, { foreignKey: 'order_id' });
+Orderline.belongsTo(Orders, { foreignKey: 'order_id' });
 
 // Orderline and OrderlineDiscounts
 Orderline.hasMany(OrderlineDiscounts, { foreignKey: 'orderline_id' });
@@ -32,8 +32,8 @@ Orderline.hasMany(OrderlineToppings, { foreignKey: 'orderline_id' });
 OrderlineToppings.belongsTo(Orderline, { foreignKey: 'orderline_id' });
 
 // OrderlineToppings and ToppingDiscounts
-OrderlineToppings.hasMany(ToppingsDiscount, { foreignKey: 'orderline_toppings_id' });
-ToppingsDiscount.belongsTo(OrderlineToppings, { foreignKey: 'orderline_toppings_id' });
+OrderlineToppings.hasMany(ToppingsDiscount, { foreignKey: 'orderline_topping_id' });
+ToppingsDiscount.belongsTo(OrderlineToppings, { foreignKey: 'orderline_topping_id' });
 
 // ToppingDiscounts and Sponsorships (for topping discounts)
 ToppingsDiscount.hasMany(Sponsorships, { foreignKey: 'toppings_discount_id' });

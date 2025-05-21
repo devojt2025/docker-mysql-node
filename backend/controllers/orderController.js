@@ -1,52 +1,56 @@
-import Orders from '../models/Orders.js';
-import OrderDiscounts from '../models/OrderDiscounts.js';
-import Orderline from '../models/Orderline.js';
-import OrderlineDiscounts from '../models/OrderlineDiscounts.js';
-import OrderlineToppings from '../models/OrderlineToppings.js';
-import ToppingDiscounts from '../models/ToppingDiscount.js';
-import Sponsorships from '../models/Sponsorships.js';
-import DeliveryFee from '../models/DeliveryFee.js';
-import sequelize from '../config/database.js';
+import Orders from "../models/Orders.js";
+import OrderDiscounts from "../models/OrderDiscounts.js";
+import Orderline from "../models/Orderline.js";
+import OrderlineDiscounts from "../models/OrderlineDiscounts.js";
+import OrderlineToppings from "../models/OrderlineToppings.js";
+import ToppingDiscounts from "../models/ToppingDiscount.js";
+import Sponsorships from "../models/Sponsorships.js";
+import DeliveryFee from "../models/DeliveryFee.js";
+import sequelize from "../config/database.js";
 
 const getClientIP = (req) => {
-  return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  return req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 };
 
 export const index = (req, res) => {
   const clientIP = getClientIP(req);
   console.log(`Request from IP: ${clientIP}`);
   res.json({
-    message: 'Congrats! You reached this endpoint.',
+    message: "Congrats! You reached this endpoint.",
     client_ip: clientIP,
   });
 };
 
-const insertToppingRecursive = async (toppingData, orderlineId, parentId = null) => {
+const insertToppingRecursive = async (
+  toppingData,
+  orderlineId,
+  parentId = null
+) => {
   const topping = await OrderlineToppings.create({
     topping_id: toppingData.id,
+    orderline_id: orderlineId,
+    parent_topping_id: parentId,
     name: toppingData.name,
     type: toppingData.type || null,
     price: toppingData.price || null,
     quantity: toppingData.quantity || null,
     remote_code: toppingData.remoteCode || null,
-    parent_toppings_id: parentId,
-    orderline_id: orderlineId,
   });
 
   // Discounts
   if (toppingData.discounts?.length) {
     for (const discount of toppingData.discounts) {
       const toppingDiscount = await ToppingDiscounts.create({
+        orderline_topping_id: topping.id,
         name: discount.name || null,
         amount: discount.amount || null,
-        orderline_toppings_id: topping.id,
       });
 
       for (const sponsor of discount.sponsorships || []) {
         await Sponsorships.create({
+          toppings_discount_id: toppingDiscount.id,
           name: sponsor.sponsor || null,
           amount: sponsor.amount || null,
-          toppings_discount_id: toppingDiscount.id,
         });
       }
     }
@@ -72,7 +76,7 @@ export const receiveOrder = async (req, res) => {
       cus_first_name: data.customer?.firstName,
       cus_last_name: data.customer?.lastName,
       cus_phone: data.customer?.mobilePhone,
-      cus_flag: (data.customer?.flags || []).join(','),
+      cus_flag: (data.customer?.flags || []).join(","),
       grand_total: data.price?.grandTotal,
       pay_restaurant: data.price?.payRestaurant,
       rider_tip: data.price?.riderTip,
@@ -118,35 +122,36 @@ export const receiveOrder = async (req, res) => {
       picked_up: data.callbackUrls?.orderPickedUpUrl,
       prepared_url: data.callbackUrls?.orderPreparedUrl,
       expire_at: data.expiryDate,
-      createdAt: data.createdAt,
+      created_at: data.created_at,
     });
 
     for (const discount of data.discounts || []) {
       const orderDiscount = await OrderDiscounts.create({
+        order_id: order.id,
         name: discount.name,
         amount: discount.amount,
-        orders_id: order.id,
       });
 
       for (const sponsor of discount.sponsorships || []) {
         await Sponsorships.create({
+          order_discount_id: orderDiscount.id,
           name: sponsor.sponsor,
           amount: sponsor.amount,
-          order_discounts_id: orderDiscount.id,
         });
       }
     }
 
     for (const fee of data.price?.deliveryFees || []) {
       await DeliveryFee.create({
+        order_id: order.id,
         name: fee.name,
         value: fee.value,
-        orders_id: order.id,
       });
     }
 
     for (const product of data.products || []) {
       const orderline = await Orderline.create({
+        order_id: order.id,
         product_id: product.id,
         category_name: product.categoryName,
         name: product.name,
@@ -156,14 +161,13 @@ export const receiveOrder = async (req, res) => {
         unit_price: product.unitPrice,
         comment: product.comment,
         variation_name: product.variation?.name,
-        orders_id: order.id,
       });
 
       for (const discount of product.discounts || []) {
         await OrderlineDiscounts.create({
+          orderline_id: orderline.id,
           name: discount.name,
           amount: discount.amount,
-          orderline_id: orderline.id,
         });
       }
 
@@ -172,20 +176,18 @@ export const receiveOrder = async (req, res) => {
       }
     }
 
-    res.status(201).json({ message: 'Order received and saved.' });
-
+    res.status(201).json({ message: "Order received and saved." });
   } catch (err) {
-    console.error('Order processing failed:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Order processing failed:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-
 export const testDB = async (req, res) => {
-    try{
-      await sequelize.authenticate()
-      console.log('Database connected');
-    }catch (error) {
-      console.log('Unable to connect to the database: ', error);
-    }
-}
+  try {
+    await sequelize.authenticate();
+    console.log("Database connected");
+  } catch (error) {
+    console.log("Unable to connect to the database: ", error);
+  }
+};

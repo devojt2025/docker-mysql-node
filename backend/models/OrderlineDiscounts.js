@@ -7,9 +7,9 @@ const OrderlineDiscounts = sequelize.define('OrderlineDiscounts', {
     autoIncrement: true,
     primaryKey: true,
   },
+  orderline_id: DataTypes.INTEGER,
   name: DataTypes.STRING,
   amount: DataTypes.FLOAT,
-  orderline_id: DataTypes.INTEGER,
 }, {
   tableName: 'orderline_discount',
   paranoid: true,

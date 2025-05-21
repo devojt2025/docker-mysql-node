@@ -7,6 +7,7 @@ const Orderline = sequelize.define('Orderline', {
     autoIncrement: true,
     primaryKey: true,
   },
+  order_id: DataTypes.INTEGER,
   product_id: DataTypes.INTEGER,
   category_name: DataTypes.STRING,
   name: DataTypes.STRING,
@@ -18,7 +19,6 @@ const Orderline = sequelize.define('Orderline', {
   comment: DataTypes.TEXT,
   variation_name: DataTypes.STRING,
   item_unavailability_handling: DataTypes.STRING,
-  orders_id: DataTypes.INTEGER,
 }, {
   tableName: 'orderline',
   paranoid: true,

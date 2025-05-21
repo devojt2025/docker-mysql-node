@@ -7,9 +7,9 @@ const DeliveryFee = sequelize.define('DeliveryFee', {
     autoIncrement: true,
     primaryKey: true,
   },
+  order_id: DataTypes.INTEGER,
   name: DataTypes.STRING,
   value: DataTypes.FLOAT,
-  orders_id: DataTypes.INTEGER,
 }, {
   tableName: 'delivery_fee',
   paranoid: true,

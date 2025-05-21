@@ -7,6 +7,10 @@ const OrderDiscounts = sequelize.define('OrderDiscounts', {
     autoIncrement: true,
     primaryKey: true,
   },
+  order_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -15,11 +19,6 @@ const OrderDiscounts = sequelize.define('OrderDiscounts', {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  orders_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  
 }, {
   tableName: 'order_discounts',
   paranoid: true,             // enables soft deletes with deleted_at
