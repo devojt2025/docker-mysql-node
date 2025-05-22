@@ -217,5 +217,20 @@ export const receiveOrder = async (req, res) => {
 };
 
 export const getOrders = async (req, res) => {
-
+  try {
+    const orders = await Orders.findAll({
+      attributes: ['id', 'raw_payload']
+    })
+    // Parse raw_payload JSON string
+    const payload = orders.map(order => ({
+      id: order.id,
+      raw_payload: JSON.parse(order.raw_payload)
+    }));
+    res.status(200).json({
+      payload
+    })
+  } catch (err) {
+    console.error("Order processing failed:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
