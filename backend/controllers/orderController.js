@@ -154,7 +154,7 @@ export const receiveOrder = async (req, res) => {
       picked_up: data.callbackUrls?.orderPickedUpUrl,
       prepared_url: data.callbackUrls?.orderPreparedUrl,
       expire_at: data.expiryDate,
-      raw_payload: data,
+      raw_payload: JSON.stringify(req.body),
       created_at: data.createdAt,
     });
 
@@ -222,10 +222,19 @@ export const getOrders = async (req, res) => {
       attributes: ['id', 'raw_payload']
     })
     // Parse raw_payload JSON string
-    const payload = orders.map(order => ({
-      id: order.id,
-      raw_payload: JSON.parse(order.raw_payload)
-    }));
+    const payload = orders.map(order => {
+      console.log('BEFORE PARSE:', typeof order.raw_payload, order.raw_payload);
+
+      const parsedPayload = typeof order.raw_payload === 'string'
+        ? JSON.parse(order.raw_payload)
+        : order.raw_payload;
+
+      return {
+        id: order.id,
+        raw_payload: JSON.parse(parsedPayload)
+      };
+    });
+
     res.status(200).json({
       payload
     })
