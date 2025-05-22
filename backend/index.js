@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(ipWhitelistChecker);
-app.use('/api/v1/foodpanda/', order);  
+app.use('/api/v1/foodpanda', order);  
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
