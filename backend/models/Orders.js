@@ -55,6 +55,7 @@ const Orders = sequelize.define('Orders', {
   short_code: DataTypes.STRING,
   platform_restaurant_id: DataTypes.STRING,
   expire_at: DataTypes.DATE,
+  raw_payload: DataTypes.JSON,
   accepted_url: DataTypes.STRING,
   rejected_url: DataTypes.STRING,
   picked_up: DataTypes.BOOLEAN,

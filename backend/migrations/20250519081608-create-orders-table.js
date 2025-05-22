@@ -60,6 +60,7 @@ export default {
       picked_up: Sequelize.TEXT,
       prepared_url: Sequelize.TEXT,
       expire_at: Sequelize.DATE,
+      raw_payload: Sequelize.JSON,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE,

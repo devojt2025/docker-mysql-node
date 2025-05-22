@@ -8,19 +8,12 @@ import Sponsorships from "../models/Sponsorships.js";
 import DeliveryFee from "../models/DeliveryFee.js";
 import sequelize from "../config/database.js";
 
+// util to get client IP
 const getClientIP = (req) => {
   return req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 };
 
-export const index = (req, res) => {
-  const clientIP = getClientIP(req);
-  console.log(`Request from IP: ${clientIP}`);
-  res.json({
-    message: "Congrats! You reached this endpoint.",
-    client_ip: clientIP,
-  });
-};
-
+// add child toppings
 const insertToppingRecursive = async (
   toppingData,
   orderlineId,
@@ -61,6 +54,45 @@ const insertToppingRecursive = async (
   }
 };
 
+/*
+Use to check if request reaches the server
+route - /api/v1/foodpanda/test
+*/
+export const index = (req, res) => {
+  const clientIP = getClientIP(req);
+  console.log(`Request from IP: ${clientIP}`);
+  res.json({
+    message: "Congrats! You reached this endpoint.",
+    client_ip: clientIP,
+  });
+};
+
+/*
+Use to test database connection
+route - /api/v1/foodpanda/testdb
+*/
+export const testDB = async (req, res) => {
+  try {
+    await sequelize.authenticate()
+    res.status(201).json({
+      message: "Database connected",
+      success: true
+    })
+    console.log('Database connected');
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: `Unable to connect to the datbase: ${error}`
+    })
+    console.log('Unable to connect to the database: ', error);
+  }
+}
+
+
+/*
+Order dispatch Webhook (Receive Orders)
+route - /api/v1/foodpanda/order/:remoteId
+*/
 export const receiveOrder = async (req, res) => {
   try {
     const remoteId = req.params.remoteId;
@@ -122,6 +154,7 @@ export const receiveOrder = async (req, res) => {
       picked_up: data.callbackUrls?.orderPickedUpUrl,
       prepared_url: data.callbackUrls?.orderPreparedUrl,
       expire_at: data.expiryDate,
+      raw_payload: data,
       created_at: data.createdAt,
     });
 
@@ -183,19 +216,6 @@ export const receiveOrder = async (req, res) => {
   }
 };
 
-export const testDB = async (req, res) => {
-    try{
-      await sequelize.authenticate()
-      res.status(201).json({
-        message: "Database connected",
-        success: true
-      })
-      console.log('Database connected');
-    }catch (error) {
-      res.status(500).json({
-        success:false,
-        message: `Unable to connect to the datbase: ${error}`
-      })
-      console.log('Unable to connect to the database: ', error);
-    }
+export const getOrders = async (req, res) => {
+
 }
