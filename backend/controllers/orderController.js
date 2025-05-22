@@ -227,7 +227,7 @@ export const getOrders = async (req, res) => {
     })
     // Parse raw_payload JSON string
     const payload = orders.map(order => {
-      console.log('BEFORE PARSE:', typeof order.raw_payload, order.raw_payload);
+      
 
       const parsedPayload = typeof order.raw_payload === 'string'
         ? JSON.parse(order.raw_payload)
