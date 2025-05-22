@@ -74,9 +74,13 @@ route - /api/v1/foodpanda/testdb
 export const testDB = async (req, res) => {
   try {
     await sequelize.authenticate()
+    const [results] = await sequelize.query('SELECT VERSION() AS version');
+    console.log('MySQL Version:', results[0].version);
+
     res.status(201).json({
       message: "Database connected",
-      success: true
+      success: true,
+      payload: results[0].version
     })
     console.log('Database connected');
   } catch (error) {
@@ -231,7 +235,7 @@ export const getOrders = async (req, res) => {
 
       return {
         id: order.id,
-        raw_payload: JSON.parse(parsedPayload)
+        raw_payload: parsedPayload
       };
     });
 
