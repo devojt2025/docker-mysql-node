@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/test', index);
 router.get('/testdb', testDB);
-router.post('/:remoteId', receiveOrder);
+router.post('order/:remoteId', receiveOrder);
 
 export default router;

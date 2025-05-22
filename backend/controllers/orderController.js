@@ -184,10 +184,18 @@ export const receiveOrder = async (req, res) => {
 };
 
 export const testDB = async (req, res) => {
-  try {
-    await sequelize.authenticate();
-    console.log("Database connected");
-  } catch (error) {
-    console.log("Unable to connect to the database: ", error);
-  }
-};
+    try{
+      await sequelize.authenticate()
+      res.status(201).json({
+        message: "Database connected",
+        success: true
+      })
+      console.log('Database connected');
+    }catch (error) {
+      res.status(500).json({
+        success:false,
+        message: `Unable to connect to the datbase: ${error}`
+      })
+      console.log('Unable to connect to the database: ', error);
+    }
+}
