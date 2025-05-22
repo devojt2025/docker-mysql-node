@@ -1,6 +1,6 @@
 import express from 'express';
 import order from './routes/orderRoutes.js';  
-import ipWhitelistChecker from './middleware/ipwhitelistchecker.js';
+import ipWhitelistChecker from './middleware/ipWhitelistChecker.js';
 
 const app = express();
 
