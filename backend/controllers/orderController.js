@@ -212,7 +212,7 @@ export const receiveOrder = async (req, res) => {
         await insertToppingRecursive(topping, orderline.id);
       }
     }
-
+    req.io.emit('new_order', req.body.token);
     res.status(201).json({ message: "Order received and saved." });
   } catch (err) {
     console.error("Order processing failed:", err);
