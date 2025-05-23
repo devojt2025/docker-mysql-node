@@ -26,7 +26,7 @@ function App() {
         <div className="border border-black h-52">panel statuses</div>
         <div className="border flex-1 p-4 overflow-y-auto border-black">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-            {orders.map((order, index) => (
+            {orders && orders.map((order, index) => (
               <Card key={index} order={order} />
             ))}
           </div>
