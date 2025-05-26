@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import socket from "./socket";
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrders } from "./redux/action/orderActions";
-import Card from "./Components/Card";
+import OrdersCard from "./Components/Card";
 
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         <div className="border flex-1 p-4 overflow-y-auto border-black">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
             {orders && orders.map((order, index) => (
-              <Card key={index} order={order} />
+              <OrdersCard key={index} order={order} />
             ))}
           </div>
 
