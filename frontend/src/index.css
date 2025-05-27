@@ -22,3 +22,16 @@
 /* body {
   font-family: 'Quicksand', sans-serif;
 } */
+
+.order-card-container .p-card-content {
+  padding: 0 !important;
+}
+
+.order-card-container .p-card-body {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.order-card-container .p-card-footer {
+  padding: 0 !important;
+}
