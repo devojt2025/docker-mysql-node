@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "primereact/card";
+import { formatDate } from "../utils/helper";
 
 const OrdersCard = ({ order }) => {
   const data = order.raw_payload;
@@ -30,16 +31,14 @@ const OrdersCard = ({ order }) => {
         <div className="text-3xl font-bold text-pink-600">{data.token}</div>
       </div>
       <div className="text-xs text-gray-500 -mt-8">
-        {new Date(data.created_at)
-          .toLocaleString("sv-SE", { hour12: false })
-          .replace("T", " ")}
+        {formatDate(data.createdAt)}
       </div>
     </div>
   );
 
   const footer = (
     <div className="flex justify-end items-end py-2">
-      <img src="/foodpanda.jpg" alt="Logo" className="h-10 w-10" />
+      <img src="/foodpanda.jpg" alt="Logo" className="h-10 w-10 hover:cursor-pointer transition-transform duration-300 transform hover:-translate-y-1" />
     </div>
   )
 
@@ -48,7 +47,7 @@ const OrdersCard = ({ order }) => {
       <Card
         header={header}
         footer={footer}
-        className="w-full border-4 border-pink-500 rounded-3xl shadow-lg"
+        className="w-full border-4 border-pink-500 rounded-3xl shadow-lg p-0"
       >
         <div className="font-semibold mb-2 pt-0 text-sm">
           <div className="flex justify-between">
@@ -108,13 +107,13 @@ const OrdersCard = ({ order }) => {
           <div className="mt-4 border-t border-t-gray-400 flex items-center justify-between">
             <div className="flex items-center text-pink-600 font-bold text-md -mt-2">
               {data.expeditionType &&
-              data.expeditionType.toLowerCase() === "delivery"
+                data.expeditionType.toLowerCase() === "delivery"
                 ? truckIcon
                 : bagIcon}
               <span className="font-bold">
                 {data.expeditionType
                   ? data.expeditionType.charAt(0).toUpperCase() +
-                    data.expeditionType.slice(1)
+                  data.expeditionType.slice(1)
                   : ""}
               </span>
             </div>
@@ -128,7 +127,7 @@ const OrdersCard = ({ order }) => {
                 }).format(
                   new Date(
                     data.delivery.expectedDeliveryTime ||
-                      data.delivery.riderPickupTime
+                    data.delivery.riderPickupTime
                   )
                 )}
                 {/* {data.delivery.expectedDeliveryTime || data.delivery.riderPickupTime} */}

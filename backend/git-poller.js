@@ -7,7 +7,7 @@ import path from 'path';
 
 const logFile = 'git-pull-log.txt';
 const repoDirectory = "C:\\Users\\DEVELOPER.ACC\\Documents\\docker-mysql-node";
-const command = `cd "${repoDirectory}"; git checkout master; git pull; cd backend ; npm i; pm2 restart foodpanda; cd ../frontend; npm i; npm run deploy`;
+const command = `cd "${repoDirectory}"; git checkout master; git pull; cd backend ; npm i; pm2 restart foodpanda; cd ../frontend; npm i; npm run deploy; C:\\nginx\\nginx.exe -s reload`;
 const fetch = `cd "${repoDirectory}"; git fetch`;
 const countDiff = `cd "${repoDirectory}"; git rev-list HEAD..origin/master --count`;
 

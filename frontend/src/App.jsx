@@ -3,41 +3,23 @@ import socket from "./socket";
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrders } from "./redux/action/orderActions";
 import OrdersCard from "./Components/Card";
-
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+import Login from "./Pages/Login";
+import {ToastContainer} from 'react-toastify'
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 function App() {
-  const dispatch = useDispatch();
-  const { orders, loading, error } = useSelector((state) => state.orders);
-  useEffect(() => {
-    socket.on("new_order", (data) => {
-      console.log("order token: ", data)
-      dispatch(getOrders());
-    })
-  }, [socket])
-  useEffect(() => {
-    dispatch(getOrders());
-  }, [dispatch])
-  useEffect(() => {
-    console.log("Orders: ", orders);
-  }, [orders])
   return (
     <>
-      <div className="flex flex-col gap-4 justify-between h-[calc(100vh-2rem)] border p-4 m-4">
-        <div className="border border-black h-52">panel statuses</div>
-        <div className="border flex-1 p-4 overflow-y-auto border-black">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-            {orders && orders.map((order, index) => (
-              <OrdersCard key={index} order={order} />
-            ))}
-          </div>
-
-        </div>
-
-
-
-      </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ProtectedRoute isAuthorized={true}><Home/></ProtectedRoute>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
+    </Router>
+    <ToastContainer position="bottom-right"/>
     </>
-  );
+  )
 }
 
 export default App;
