@@ -13,6 +13,6 @@ export const login = async (req, res) => {
         });
         res.json(response.data);
     } catch (err) {
-        res.status(500).json({ error: 'API proxy error', details: err.message });
+        res.status(500).json({ error: 'API proxy error', details: err.message, message: "Invalid credentials" });
     }
 }

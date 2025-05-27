@@ -20,7 +20,8 @@ export const login = createAsyncThunk(
             authenticate(response.data, () => { });
             return response.data;
         } catch (error) {
-            return thunkAPI.rejectWithValue(error.message);
+            console.log("Error in login action:", error);
+            return thunkAPI.rejectWithValue(error.response.data.message);
         }
     }
 )

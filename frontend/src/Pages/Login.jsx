@@ -6,8 +6,10 @@ import { FloatLabel } from 'primereact/floatlabel';
 import { InputText } from 'primereact/inputtext';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/action/userActions';
+import { resetError } from '../redux/slice/userSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import {ProgressSpinner} from 'primereact/progressspinner';
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -33,7 +35,7 @@ const Login = () => {
     const footer = (
         <>
             <div className="button-wrapper-pink">
-                <Button label="Login" className="w-full" style={{ backgroundColor: "#eb55e3", borderColor: "#eb55e3" }} onClick={submitHandler} />
+               {loading ? <div className="w-full flex items-center justify-center"><ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="5"/></div> : <Button label="Login" className="w-full" style={{ backgroundColor: "#eb55e3", borderColor: "#eb55e3" }} onClick={submitHandler} />}
             </div>
         </>
     );
@@ -42,7 +44,12 @@ const Login = () => {
             toast.success("Login successful");
             navigate("/");
         }
-    },[isLoggedIn])
+        if (error){
+            
+            toast.error(error);
+            dispatch(resetError());
+        }
+    },[isLoggedIn, error])
     return (
         <div className="login-card flex justify-center items-center h-[calc(100vh-2rem)]">
             <Card footer={footer} header={header} className="w-[15rem] md:w-[25rem] border p-4">
