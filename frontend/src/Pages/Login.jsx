@@ -34,8 +34,8 @@ const Login = () => {
     );
     const footer = (
         <>
-            <div className="button-wrapper-pink">
-               {loading ? <div className="w-full flex items-center justify-center"><ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="5"/></div> : <Button label="Login" className="w-full" style={{ backgroundColor: "#eb55e3", borderColor: "#eb55e3" }} onClick={submitHandler} />}
+            <div className="button-wrapper-violet">
+               {loading ? <div className="w-full flex items-center justify-center"><ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="5"/></div> : <Button label="Login" className="w-full" style={{ backgroundColor: "#4E0A62", borderColor: "#4E0A62" }} onClick={submitHandler} />}
             </div>
         </>
     );

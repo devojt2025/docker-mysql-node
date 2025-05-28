@@ -17,11 +17,11 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className="sticky top-0 z-10 w-full px-4 py-1.5 lg:px-6 lg:py-2 bg-[#E53777]">
+      <nav className="sticky top-0 z-10 w-full px-4 py-1.5 lg:px-6 lg:py-2 bg-[#4E0A62]">
         <div className="flex items-center justify-end">
           <button
             onClick={handleLogout}
-            className="text-white p-2 rounded-full hover:bg-white hover:text-[#E53777] transition"
+            className="text-white p-2 rounded-full hover:bg-white hover:text-[#4E0A62] transition"
             title="Log Out"
           >
             <LuLogOut className="text-2xl" />
