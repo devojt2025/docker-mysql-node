@@ -17,7 +17,7 @@ const StatsCard = ({ status, title, value }) => {
   const { icon, color } = iconMap[status.toLowerCase()] || {};
 
   return (
-    <div className="bg-white border border-pink-400 shadow-md rounded-2xl p-5 w-full max-w-sm hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-white border border-pink-400 shadow-md rounded-2xl p-5 w-full  hover:shadow-lg transition-shadow duration-300">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg text-pink-600 font-bold text-gray-500">{title}</h3>

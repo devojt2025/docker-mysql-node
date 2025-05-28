@@ -24,8 +24,8 @@ const Home = () => {
     <>
       <Navbar />
       <div className="flex flex-col gap-4 justify-between h-[calc(100vh-8rem)] border p-4 m-4">
-        <div className="flex-1 p-2 overflow-y-auto border-black">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="w-full flex p-2 items-center justify-center border-black">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatsCard status="accepted" title="Accepted Orders" value={120} />
             <StatsCard status="prepared" title="Prepared Orders" value={98} />
             <StatsCard status="pickedup" title="Picked Up Orders" value={87} />
