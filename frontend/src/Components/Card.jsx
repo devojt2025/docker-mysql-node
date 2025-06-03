@@ -1,34 +1,54 @@
 import React from "react";
 import { Card } from "primereact/card";
 import { formatDate } from "../utils/helper";
+import { useLocation } from "react-router-dom";
 
 const OrdersCard = ({ order }) => {
+  const location = useLocation();
   const data = order.raw_payload;
 
-  const cartIcon = (
-    <i
-      className="pi pi-shopping-cart mr-1"
-      style={{ color: "var(--primary-color)", fontSize: "1.2rem" }}
-    />
-  );
-  const truckIcon = (
-    <i
-      className="pi pi-truck mr-1"
-      style={{ color: "var(--primary-color)", fontSize: "1.2rem" }}
-    />
-  );
-  const bagIcon = (
-    <i
-      className="pi pi-shopping-bag mr-1"
-      style={{ color: "var(--primary-color)" }}
-    />
-  );
+  // Determine platform:
+  // - from order.platform (if present, like in /home)
+  // - fallback to path from location (used in /foodpanda or /grab)
+  const currentPath = location.pathname.toLowerCase();
+  const platform = order.platform || (currentPath.includes("foodpanda") ? "foodpanda" : currentPath.includes("grab") ? "grab" : "unknown");
+
+  const isFoodpanda = platform === "foodpanda";
+  const isGrab = platform === "grab";
+
+const iconColor = isFoodpanda
+  ? "#E91E63" 
+  : isGrab
+  ? "#4CAF50" 
+  : "var(--primary-color)"; // fallback
+
+const cartIcon = (
+  <i
+    className="pi pi-shopping-cart mr-1"
+    style={{ color: iconColor, fontSize: "1.2rem" }}
+  />
+);
+const truckIcon = (
+  <i
+    className="pi pi-truck mr-1"
+    style={{ color: iconColor, fontSize: "1.2rem" }}
+  />
+);
+const bagIcon = (
+  <i
+    className="pi pi-shopping-bag mr-1"
+    style={{ color: iconColor }}
+  />
+);
+
 
   const header = (
     <div className="flex justify-between items-center px-4 py-2">
       <div>
         <div className="text-sm font-semibold">{data.code}</div>
-        <div className="text-3xl font-bold text-pink-600">{data.token}</div>
+        <div className={`text-3xl font-bold ${isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"}`}>
+          {data.token}
+        </div>
       </div>
       <div className="text-xs text-gray-500 -mt-8">
         {formatDate(data.createdAt)}
@@ -38,16 +58,22 @@ const OrdersCard = ({ order }) => {
 
   const footer = (
     <div className="flex justify-end items-end py-2">
-      <img src="/foodpanda.jpg" alt="Logo" className="h-10 w-10 hover:cursor-pointer transition-transform duration-300 transform hover:-translate-y-1" />
+      <img
+        src={isFoodpanda ? "/foodpanda.jpg" : isGrab ? "/grab-food.png" : "/default.jpg"}
+        alt="Logo"
+        className="h-10 w-10 hover:cursor-pointer transition-transform duration-300 transform hover:-translate-y-1"
+      />
     </div>
-  )
+  );
 
   return (
     <div className="order-card-container">
       <Card
         header={header}
         footer={footer}
-        className="w-full border-4 border-pink-500 rounded-3xl shadow-lg p-0"
+        className={`w-full border-4 ${
+          isFoodpanda ? "border-pink-500" : isGrab ? "border-green-500" : "border-gray-300"
+        } rounded-3xl shadow-lg p-0`}
       >
         <div className="font-semibold mb-2 pt-0 text-sm">
           <div className="flex justify-between">
@@ -69,7 +95,8 @@ const OrdersCard = ({ order }) => {
           </div>
 
           <div className="mt-2">
-            <div className="flex items-center text-lg text-pink-600 font-bold">
+            <div className={`flex items-center text-lg ${
+          isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
               {cartIcon}
               Order summary
             </div>
@@ -105,7 +132,8 @@ const OrdersCard = ({ order }) => {
           </div>
 
           <div className="mt-4 border-t border-t-gray-400 flex items-center justify-between">
-            <div className="flex items-center text-pink-600 font-bold text-md -mt-2">
+            <div className={`flex items-center text-lg ${
+          isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
               {data.expeditionType &&
                 data.expeditionType.toLowerCase() === "delivery"
                 ? truckIcon

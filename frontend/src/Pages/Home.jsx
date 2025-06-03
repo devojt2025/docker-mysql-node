@@ -4,44 +4,45 @@ import { getOrders } from "../redux/action/orderActions";
 import OrdersCard from "../Components/Card";
 import StatsCard from "../Components/StatsCard";
 import socket from "../socket";
-import Navbar from "../Components/Navbar";
+import placeholder from '../assets/placeholder.json';
+
+const ordersToDisplay  = placeholder;
+
 const Home = () => {
-  const dispatch = useDispatch();
-  const { orders, loading, error } = useSelector((state) => state.orders);
-  useEffect(() => {
-    socket.on("new_order", (data) => {
-      console.log("order token: ", data);
-      dispatch(getOrders());
-    });
-  }, [socket]);
-  useEffect(() => {
-    dispatch(getOrders());
-  }, [dispatch]);
-  useEffect(() => {
-    console.log("Orders: ", orders);
-  }, [orders]);
   return (
-    <>
-      <Navbar />
-      <div className="flex flex-col gap-4 justify-between h-[calc(100vh-8rem)] border p-4 m-4">
-        <div className="w-full flex p-2 items-center justify-center border-black">
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatsCard status="accepted" title="Accepted Orders" value={120} />
-            <StatsCard status="prepared" title="Prepared Orders" value={98} />
-            <StatsCard status="pickedup" title="Picked Up Orders" value={87} />
-            <StatsCard status="rejected" title="Rejected Orders" value={15} />
+<>
+  <div className="flex flex-col gap-4 justify-between h-[calc(100vh-8rem)] border p-4 m-4">
+    <div className="flex-1 p-4 border-black" style={{ height: '100%', overflowY: 'auto' }}>
+      <div className="flex h-full gap-6">
+        {/* Foodpanda Column */}
+        <div className="flex-1">
+          <h2 className="text-xl font-bold text-pink-600 mb-4">Foodpanda Orders</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {ordersToDisplay
+              .filter(order => order.platform === "foodpanda")
+              .map((order, index) => (
+                <OrdersCard key={`fp-${index}`} order={order} platform="foodpanda" />
+              ))}
           </div>
         </div>
-        <div className="flex-1 p-4 overflow-y-auto border-black">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-            {orders &&
-              orders.map((order, index) => (
-                <OrdersCard key={index} order={order} />
+
+        <div className="w-px bg-gray-300" style={{ height: '100%' }}></div>
+
+        {/* Grab Column */}
+        <div className="flex-1">
+          <h2 className="text-xl font-bold text-green-600 mb-4">Grab Orders</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {ordersToDisplay
+              .filter(order => order.platform === "grab")
+              .map((order, index) => (
+                <OrdersCard key={`grab-${index}`} order={order} platform="grab" />
               ))}
           </div>
         </div>
       </div>
-    </>
+    </div>
+  </div>
+</>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   LuCircleCheckBig,
   LuClipboardList,
@@ -14,13 +15,24 @@ const iconMap = {
 };
 
 const StatsCard = ({ status, title, value }) => {
+  const location = useLocation();
+
+  const isGrab = location.pathname.includes('/grab');
+  const isFoodpanda = location.pathname.includes('/foodpanda');
+
+  const baseTextColor = isGrab ? 'text-green-600' : 'text-pink-600';
+  const baseBorderColor = isGrab ? 'border-green-400' : 'border-pink-400';
+  const baseShadowHover = isGrab ? 'hover:shadow-green-400' : 'hover:shadow-pink-400';
+
   const { icon, color } = iconMap[status.toLowerCase()] || {};
 
   return (
-    <div className="bg-white border border-pink-400 shadow-md rounded-2xl p-5 w-full  hover:shadow-lg transition-shadow duration-300">
+    <div
+      className={`bg-white border ${baseBorderColor} shadow-md rounded-2xl p-5 w-full hover:shadow-lg transition-shadow duration-300 ${baseShadowHover}`}
+    >
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg text-pink-600 font-bold text-gray-500">{title}</h3>
+          <h3 className={`text-lg font-bold ${baseTextColor} text-gray-500`}>{title}</h3>
           <p className="text-3xl font-semibold text-gray-800 mt-1">{value}</p>
         </div>
         <div className={`text-3xl ${color}`}>{icon}</div>
