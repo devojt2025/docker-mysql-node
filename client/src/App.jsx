@@ -5,10 +5,12 @@ import Home from './Pages/Home';
 import Navbar from './Components/Layout/Navbar';
 import Foodpanda from './Pages/Foodpanda';
 import Grab from './Pages/Grab';
+import Login from './Pages/Login';
+import { Toaster } from 'sonner';
 
 
 function App() {
-  
+
 
   return (
     <>
@@ -18,9 +20,10 @@ function App() {
           <Route path="/" element={<ProtectedRoute isAuthorized={true}><Home /></ProtectedRoute>} />
           <Route path="/foodpanda" element={<ProtectedRoute isAuthorized={true}><Foodpanda /></ProtectedRoute>} />
           <Route path="/grab" element={<ProtectedRoute isAuthorized={true}><Grab /></ProtectedRoute>} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
+      <Toaster richColors/>
     </>
   )
 }

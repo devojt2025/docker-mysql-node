@@ -71,7 +71,7 @@ export const authenticate = (data, next) => {
 // remove token from session storage
 export const logoutFunc = () => {
     if (typeof window !== 'undefined') {
-        localStorage.removeItem('user');
+        localStorage.removeItem('access_token');
     }
 };
 
