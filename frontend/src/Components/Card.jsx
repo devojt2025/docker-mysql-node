@@ -16,30 +16,30 @@ const OrdersCard = ({ order }) => {
   const isFoodpanda = platform === "foodpanda";
   const isGrab = platform === "grab";
 
-const iconColor = isFoodpanda
-  ? "#E91E63" 
-  : isGrab
-  ? "#4CAF50" 
-  : "var(--primary-color)"; // fallback
+  const iconColor = isFoodpanda
+    ? "#E91E63"
+    : isGrab
+      ? "#4CAF50"
+      : "var(--primary-color)"; // fallback
 
-const cartIcon = (
-  <i
-    className="pi pi-shopping-cart mr-1"
-    style={{ color: iconColor, fontSize: "1.2rem" }}
-  />
-);
-const truckIcon = (
-  <i
-    className="pi pi-truck mr-1"
-    style={{ color: iconColor, fontSize: "1.2rem" }}
-  />
-);
-const bagIcon = (
-  <i
-    className="pi pi-shopping-bag mr-1"
-    style={{ color: iconColor }}
-  />
-);
+  const cartIcon = (
+    <i
+      className="pi pi-shopping-cart mr-1"
+      style={{ color: iconColor, fontSize: "1.2rem" }}
+    />
+  );
+  const truckIcon = (
+    <i
+      className="pi pi-truck mr-1"
+      style={{ color: iconColor, fontSize: "1.2rem" }}
+    />
+  );
+  const bagIcon = (
+    <i
+      className="pi pi-shopping-bag mr-1"
+      style={{ color: iconColor }}
+    />
+  );
 
 
   const header = (
@@ -71,9 +71,8 @@ const bagIcon = (
       <Card
         header={header}
         footer={footer}
-        className={`w-full border-4 ${
-          isFoodpanda ? "border-pink-500" : isGrab ? "border-green-500" : "border-gray-300"
-        } rounded-3xl shadow-lg p-0`}
+        className={`w-full border-4 ${isFoodpanda ? "border-pink-500" : isGrab ? "border-green-500" : "border-gray-300"
+          } rounded-3xl shadow-lg p-0`}
       >
         <div className="font-semibold mb-2 pt-0 text-sm">
           <div className="flex justify-between">
@@ -95,8 +94,7 @@ const bagIcon = (
           </div>
 
           <div className="mt-2">
-            <div className={`flex items-center text-lg ${
-          isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
+            <div className={`flex items-center text-lg ${isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
               {cartIcon}
               Order summary
             </div>
@@ -132,8 +130,7 @@ const bagIcon = (
           </div>
 
           <div className="mt-4 border-t border-t-gray-400 flex items-center justify-between">
-            <div className={`flex items-center text-lg ${
-          isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
+            <div className={`flex items-center text-lg ${isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
               {data.expeditionType &&
                 data.expeditionType.toLowerCase() === "delivery"
                 ? truckIcon

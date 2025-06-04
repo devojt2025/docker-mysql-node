@@ -22,7 +22,7 @@ const Foodpanda = () => {
   }, [orders]);
   return (
     <>
-      {/* <Navbar /> */}
+      
       <div className="flex flex-col gap-4 justify-between h-[calc(100vh-8rem)] border p-4 m-4">
         <div className="w-full flex p-2 items-center justify-center border-black">
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -39,7 +39,7 @@ const handleToggle = () => {
   return (
     <>
       <nav className="sticky top-0 z-10 w-full px-4 py-1.5 lg:px-6 lg:py-2 bg-[#4E0A62]">
-        <div className="flex items-center justify-between items-center">
+        <div className="flex justify-between items-center">
           <ToggleButton onChange={handleToggle} />
           <button
             onClick={handleLogout}
