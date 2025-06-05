@@ -18,8 +18,10 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
             password: process.env.MYSQL_PASSWORD,
         });
 
-        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE}\`;`);
-        console.log(`✅ Database "${process.env.MYSQL_DATABASE}" created or already exists.`);
+        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE_1}\`;`);
+        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE_2}\`;`);
+        console.log(`✅ Database "${process.env.MYSQL_DATABASE_1}" created or already exists.`);
+        console.log(`✅ Database "${process.env.MYSQL_DATABASE_2}" created or already exists.`);
         await connection.end();
     } catch (error) {
         console.error('❌ Error creating database:', error.message);
