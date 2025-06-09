@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import {getSequelizeInstance} from '../config/database.js';
+import {getSequelizeInstance} from '../../config/database.js';
 
 const sequelize = getSequelizeInstance({database: 'foodpanda'});
 const OrderDiscounts = sequelize.define('OrderDiscounts', {

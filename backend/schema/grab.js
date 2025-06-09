@@ -36,7 +36,8 @@ export const up = async (queryInterface, Sequelize) => {
     membership_id: Sequelize.TEXT,
     raw_payload: Sequelize.JSON,
     created_at: Sequelize.DATE,
-    updated_at: Sequelize.DATE
+    updated_at: Sequelize.DATE,
+    deleted_at: Sequelize.DATE
   });
 };
 
@@ -48,7 +49,7 @@ export const down = async (queryInterface) => {
 export const up_campaigns = async (queryInterface, Sequelize) => {
   await queryInterface.createTable('campaigns', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    orders_id: { type: Sequelize.INTEGER, allowNull: false },
+    order_id: { type: Sequelize.INTEGER, allowNull: false },
     campaign_id: Sequelize.TEXT,
     name: Sequelize.TEXT,
     campaign_name_for_mex: Sequelize.TEXT,
@@ -64,10 +65,11 @@ export const up_campaigns = async (queryInterface, Sequelize) => {
     free_item_quantity: Sequelize.TEXT,
     free_item_price: Sequelize.TEXT,
     created_at: Sequelize.DATE,
-    updated_at: Sequelize.DATE
+    updated_at: Sequelize.DATE,
+    deleted_at: Sequelize.DATE
   });
   await queryInterface.addConstraint('campaigns', {
-    fields: ['orders_id'],
+    fields: ['order_id'],
     type: 'foreign key',
     name: 'fk_campaigns_orders1',
     references: { table: 'orders', field: 'id' },
@@ -93,7 +95,8 @@ export const up_orderline = async (queryInterface, Sequelize) => {
     specifications: Sequelize.TEXT,
     out_of_stock_instruction: Sequelize.JSON,
     created_at: Sequelize.DATE,
-    updated_at: Sequelize.DATE
+    updated_at: Sequelize.DATE,
+    deleted_at: Sequelize.DATE
   });
   await queryInterface.addConstraint('orderline', {
     fields: ['order_id'],
@@ -119,7 +122,8 @@ export const up_modifiers = async (queryInterface, Sequelize) => {
     tax: Sequelize.INTEGER,
     quantity: { type: Sequelize.INTEGER, defaultValue: 1 },
     created_at: Sequelize.DATE,
-    updated_at: Sequelize.DATE
+    updated_at: Sequelize.DATE,
+    deleted_at: Sequelize.DATE
   });
   await queryInterface.addConstraint('modifiers', {
     fields: ['orderline_id'],
@@ -139,7 +143,7 @@ export const down_modifiers = async (queryInterface) => {
 export const up_promos = async (queryInterface, Sequelize) => {
   await queryInterface.createTable('promos', {
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    orders_id: { type: Sequelize.INTEGER, allowNull: false },
+    order_id: { type: Sequelize.INTEGER, allowNull: false },
     code: Sequelize.TEXT,
     description: Sequelize.TEXT,
     name: Sequelize.TEXT,
@@ -149,10 +153,11 @@ export const up_promos = async (queryInterface, Sequelize) => {
     targeted_price: Sequelize.INTEGER,
     promo_amount_in_min: Sequelize.INTEGER,
     created_at: Sequelize.DATE,
-    updated_at: Sequelize.DATE
+    updated_at: Sequelize.DATE,
+    deleted_at: Sequelize.DATE
   });
   await queryInterface.addConstraint('promos', {
-    fields: ['orders_id'],
+    fields: ['order_id'],
     type: 'foreign key',
     name: 'fk_promos_orders1',
     references: { table: 'orders', field: 'id' },

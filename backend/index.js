@@ -8,9 +8,9 @@ import ipWhitelistChecker from './middleware/ipWhitelistChecker.js';
 import cors from 'cors';
 
 //Routes
-import order from './routes/orderRoutes.js';
+import foodpanda from './routes/foodpandaRoutes.js';
 import user from './routes/userRoutes.js';
-
+import grab from './routes/grabRoutes.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -35,9 +35,9 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(ipWhitelistChecker);
-app.use('/api/v1/foodpanda', order);
+app.use('/api/v1/foodpanda', foodpanda);
 app.use('/api/v1/foodpanda', user);
-
+app.use('/api/v1/grab', grab);
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);

@@ -1,21 +1,21 @@
 import { DataTypes } from 'sequelize';
-import {getSequelizeInstance} from '../config/database.js';
+import {getSequelizeInstance} from '../../config/database.js';
 
 const sequelize = getSequelizeInstance({database: 'foodpanda'});
-const OrderlineDiscounts = sequelize.define('OrderlineDiscounts', {
+const ToppingsDiscount = sequelize.define('ToppingsDiscount', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  orderline_id: DataTypes.INTEGER,
+  orderline_topping_id: DataTypes.INTEGER,
   name: DataTypes.STRING,
   amount: DataTypes.FLOAT,
 }, {
-  tableName: 'orderline_discount',
+  tableName: 'toppings_discount',
   timestamps: true,
   underscored: true,
   paranoid: true,
 });
 
-export default OrderlineDiscounts;
+export default ToppingsDiscount;

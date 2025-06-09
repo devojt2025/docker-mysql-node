@@ -1,11 +1,11 @@
-import Orders from "../models/Orders.js";
-import OrderDiscounts from "../models/OrderDiscounts.js";
-import Orderline from "../models/Orderline.js";
-import OrderlineDiscounts from "../models/OrderlineDiscounts.js";
-import OrderlineToppings from "../models/OrderlineToppings.js";
-import ToppingDiscounts from "../models/ToppingDiscount.js";
-import Sponsorships from "../models/Sponsorships.js";
-import DeliveryFee from "../models/DeliveryFee.js";
+import Orders from "../models/foodpanda/Orders.js";
+import OrderDiscounts from "../models/foodpanda/OrderDiscounts.js";
+import Orderline from "../models/foodpanda/Orderline.js";
+import OrderlineDiscounts from "../models/foodpanda/OrderlineDiscounts.js";
+import OrderlineToppings from "../models/foodpanda/OrderlineToppings.js";
+import ToppingDiscounts from "../models/foodpanda/ToppingDiscount.js";
+import Sponsorships from "../models/foodpanda/Sponsorships.js";
+import DeliveryFee from "../models/foodpanda/DeliveryFee.js";
 import {getSequelizeInstance} from '../config/database.js';
 
 const sequelize = getSequelizeInstance({database: 'foodpanda'});
@@ -73,25 +73,34 @@ Use to test database connection
 route - /api/v1/foodpanda/testdb
 */
 export const testDB = async (req, res) => {
-  try {
-    await sequelize.authenticate()
-    const [results] = await sequelize.query('SELECT VERSION() AS version');
-    console.log('MySQL Version:', results[0].version);
+    try {
+        await sequelize.authenticate()
+        // Get MySQL version and selected database name
+        const [[versionResult], [dbResult]] = await Promise.all([
+            sequelize.query('SELECT VERSION() AS `version`'),
+            sequelize.query('SELECT DATABASE() AS `database`'),
+        ]);
 
-    res.status(201).json({
-      message: "Database connected",
-      success: true,
-      payload: results[0].version
-    })
-    console.log('Database connected');
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: `Unable to connect to the datbase: ${error}`
-    })
-    console.log('Unable to connect to the database: ', error);
-  }
+        console.log('MySQL Version:', versionResult.version);
+        console.log('Selected Database:', dbResult.database);
+
+        res.status(200).json({
+            message: "Database connected",
+            success: true,
+            payload: {
+                version: versionResult[0]?.version,
+                database: dbResult[0]?.database,
+            },
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: `Unable to connect to the database: ${error}`
+        })
+        console.log('Unable to connect to the database: ', error);
+    }
 }
+
 
 
 /*
