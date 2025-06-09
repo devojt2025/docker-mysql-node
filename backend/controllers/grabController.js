@@ -159,6 +159,7 @@ export const receiveOrder = async (req, res) => {
         }
 
         await transaction.commit();
+        req.io.emit('grab_order_received', req.body.orderID)
         res.status(201).json({ success: true, message: "Order stored successfully" });
     } catch (error) {
         await transaction.rollback();

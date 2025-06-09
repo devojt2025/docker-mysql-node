@@ -1,10 +1,12 @@
 // src/store/index.js
 import { configureStore } from '@reduxjs/toolkit';
-import orderReducer from './slice/orderSlice';
+import foodpandaReducer from './slice/foodpandaSlice';
 import userReducer from './slice/userSlice';
+import grabReducer from './slice/grabSlice';
 const store = configureStore({
   reducer: {
-    orders: orderReducer,
+    foodpanda: foodpandaReducer,
+    grab: grabReducer,
     users: userReducer
   }
 });

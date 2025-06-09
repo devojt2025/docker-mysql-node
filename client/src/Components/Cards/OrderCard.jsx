@@ -5,18 +5,13 @@ import { ShoppingCart, TruckIcon, ShoppingBag } from 'lucide-react'
 const OrderCard = ({ order }) => {
     const location = useLocation()
     const data = order.raw_payload;
-    const currentPath = location.pathname.toLowerCase();
-
-    const platform = order.platform || (currentPath.includes("foodpanda") ? "foodpanda" : currentPath.includes("grab") ? "grab" : "unknown");
-    const isFoodpanda = platform === "foodpanda";
-    const isGrab = platform === "grab";
 
 
-    const iconColor = isFoodpanda
-        ? "#E91E63"
-        : isGrab
-            ? "#4CAF50"
-            : "var(--primary-color)"; // fallback
+
+
+
+
+    const iconColor = "#E91E63"
 
     const cartIcon = (
         <ShoppingCart
@@ -37,18 +32,19 @@ const OrderCard = ({ order }) => {
         />
     );
     return (
-        <div className={`card card-border border-4 ${isFoodpanda ? "border-secondary" : isGrab ? "border-success" : "border-base"} text-light w-96`}>
+        <div className={`card card-border border-4 border-secondary  text-light w-full`}>
 
             <div className="card-body">
                 <div className="card-title flex justify-between items-center">
                     <div>
-                        <div className="text-sm font-semibold">{data.code}</div>
-                        <div className={`text-3xl font-bold ${isFoodpanda ? "text-secondary" : isGrab ? "text-success" : "text-base"}`}>
-                            {data.token}
+                        <div className="text-sm font-semibold">{data?.code || 'N/A'}</div>
+                        <div className={`text-3xl font-bold text-secondary`}>
+                            {data?.token || 'N/A'}
                         </div>
+
                     </div>
-                    <div className="text-xs text-base -mt-8">
-                        {formatDate(data.createdAt)}
+                    <div className="text-base -mt-8">
+                        {formatDate(data ? data.createdAt : 'N/A')}
                     </div>
                 </div>
 
@@ -57,86 +53,96 @@ const OrderCard = ({ order }) => {
                         <div>
                             <div className="text-gray-500">Name:</div>
                             <div className="font-bold">
-                                {data.customer.firstName} {data.customer.lastName}
+                                {data?.customer?.firstName && data?.customer?.lastName
+                                    ? `${data.customer.firstName} ${data.customer.lastName}`
+                                    : 'N/A'}
                             </div>
                         </div>
                         <div>
                             <div className="text-gray-500">Phone:</div>
-                            <div className="font-bold">{data.customer.mobilePhone}</div>
+                            <div className="font-bold">{data?.customer?.mobilePhone || 'N/A'}</div>
                         </div>
                     </div>
                     <div className="mt-2 border border-gray-400 rounded p-2 bg-gray-50 text-xs">
                         <strong>Customer comment:</strong>
-                        <div className="text-gray-700">{data.comments.customerComment}</div>
+                        <div className="text-gray-700">{data?.comments?.customerComment || 'N/A'}</div>
+
                     </div>
                     <div className="mt-2">
-                        <div className={`flex items-center text-lg ${isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
+                        <div className={`flex items-center text-lg text-pink-600 font-bold`}>
                             {cartIcon}
                             Order summary
                         </div>
 
-                        {data.products.map((product, index) => (
-                            <div key={index} className="mb-2 ml-6">
-                                <div className="flex justify-between font-bold">
-                                    <span>{product.quantity ? product.quantity : '1'}x {product.name}</span>
-                                    <span>₱ {product.unitPrice}</span>
+                        {Array.isArray(data?.products) &&
+                            data.products.map((product, index) => (
+                                <div key={index} className="mb-2 ml-6">
+                                    <div className="flex justify-between font-bold">
+                                        <span>{product.quantity || '1'}x {product.name}</span>
+                                        <span>₱ {product.unitPrice}</span>
+                                    </div>
+                                    {Array.isArray(product.selectedToppings) &&
+                                        product.selectedToppings.map((topping, i) => (
+                                            <div key={i} className="flex justify-between text-sm ml-4">
+                                                <span className="text-gray-500">
+                                                    {topping.quantity}x {topping.name}
+                                                </span>
+                                                <span className="font-bold">₱ {topping.price}</span>
+                                            </div>
+                                        ))}
                                 </div>
-                                {product.selectedToppings &&
-                                    product.selectedToppings.map((topping, i) => (
-                                        <div key={i} className="flex justify-between text-sm ml-4">
-                                            <span className="text-gray-500">
-                                                {topping.quantity}x {topping.name}
-                                            </span>
-                                            <span className="font-bold">₱ {topping.price}</span>
-                                        </div>
-                                    ))}
-                            </div>
-                        ))}
+                            ))}
                     </div>
                     <div className="mt-2 border-t border-t-gray-400 pt-2 text-sm">
                         <div className="flex justify-between">
                             <span className="text-gray-500">Total:</span>
-                            <span className="font-bold">₱ {data.price.grandTotal}</span>
+                            <span className="font-bold">
+                                ₱ {data?.price?.grandTotal || 'N/A'}
+                            </span>
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-500">Payment Type:</span>
-                            <span className="font-bold">{data.payment.type}</span>
+                            <span className="font-bold">{data?.payment?.type || 'N/A'}</span>
                         </div>
                     </div>
                     <div className="mt-4 border-t border-t-gray-400 flex items-center justify-between">
-                        <div className={`flex items-center text-lg ${isFoodpanda ? "text-pink-600" : isGrab ? "text-green-600" : "text-gray-600"} font-bold`}>
-                            {data.expeditionType &&
-                                data.expeditionType.toLowerCase() === "delivery"
-                                ? truckIcon
-                                : bagIcon}
+                        <div className={`flex items-center text-lg text-pink-600 font-bold`}>
+                            {
+                                data?.expeditionType?.toLowerCase() === "delivery" ? truckIcon : bagIcon
+                            }
                             <span className="font-bold">
-                                {data.expeditionType
-                                    ? data.expeditionType.charAt(0).toUpperCase() +
-                                    data.expeditionType.slice(1)
-                                    : ""}
+                                {data?.expeditionType
+                                    ? data.expeditionType.charAt(0).toUpperCase() + data.expeditionType.slice(1)
+                                    : 'N/A'}
                             </span>
                         </div>
                         <div className="text-right text-gray-700 pt-2">
                             <div className="text-gray-500">Expected Delivery Time:</div>
                             <div className="font-bold">
-                                {new Intl.DateTimeFormat("en-US", {
-                                    weekday: "long",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                }).format(
-                                    new Date(
-                                        data.delivery.expectedDeliveryTime ||
-                                        data.delivery.riderPickupTime
+                                {data?.delivery?.expectedDeliveryTime || data?.delivery?.riderPickupTime
+                                    ? new Intl.DateTimeFormat("en-US", {
+                                        weekday: "long",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    }).format(
+                                        new Date(
+                                            data.delivery.expectedDeliveryTime || data.delivery.riderPickupTime
+                                        )
                                     )
-                                )}
-                               
+                                    : 'N/A'}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="card-actions justify-end">
-                    <button className="btn text-white btn-success">Accept</button>
+                <div className="flex justify-end items-center gap-4">
+                    <div className="card-actions justify-end">
+                        <button className="btn text-white btn-success">Accept</button>
+                    </div>
+                    <div className="card-actions justify-end">
+                        <button className="btn text-white btn-error">Reject</button>
+                    </div>
                 </div>
+
             </div>
 
         </div>

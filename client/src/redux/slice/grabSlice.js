@@ -1,11 +1,12 @@
 // src/store/exampleSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { getOrders } from '../action/orderActions';
+import { getOrders } from '../action/grabActions';
 
-const orderSlice = createSlice({
+const grabSlice = createSlice({
   name: 'orders',
   initialState: {
     orders: [],
+    count: 0,
     loading: false,
     error: false
   },
@@ -22,6 +23,7 @@ const orderSlice = createSlice({
     .addCase(getOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = action.payload.payload
+        state.count = action.payload.count;
     })
     .addCase(getOrders.rejected, (state, action) => {
         state.loading = false;
@@ -30,5 +32,5 @@ const orderSlice = createSlice({
   }
 });
 
-export const { resetError } = orderSlice.actions;
-export default orderSlice.reducer;
+export const { resetError } = grabSlice.actions;
+export default grabSlice.reducer;

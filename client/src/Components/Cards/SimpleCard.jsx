@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { formatDate } from '../../utils/helper';
 import { ShoppingBag, ShoppingCart, TruckIcon } from 'lucide-react';
 
-const SimpleCard = ({ order }) => {
+const SimpleCard = ({ order, platform }) => {
     const data = order.raw_payload
     const location = useLocation();
     const currentPath = location.pathname.toLowerCase();
 
-    const platform = order.platform || (currentPath.includes("foodpanda") ? "foodpanda" : currentPath.includes("grab") ? "grab" : "unknown");
+  
     const isFoodpanda = platform === "foodpanda";
     const isGrab = platform === "grab";
 

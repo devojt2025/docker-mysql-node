@@ -1,26 +1,54 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrders } from '../../../frontend/src/redux/action/orderActions'
-import OrdersCard from '../../../frontend/src/Components/Card'
-import StatsCard from '../../../frontend/src/Components/StatsCard'
+import { getOrders } from '../redux/action/foodpandaActions'
+import StatsCard from '../Components/Cards/StatsCard'
 import socket from '../socket'
 import OrderCard from '../Components/Cards/OrderCard'
+import FPPlaceholderCard from '../Components/Cards/FPPlaceholderCard'
+import StatsPlaceholder from '../Components/Cards/StatsPlaceholder'
 
 const Foodpanda = () => {
     const dispatch = useDispatch();
-    const { orders, loading, error } = useSelector((state) => state.orders);
+    const { orders, loading, error } = useSelector((state) => state.foodpanda);
     useEffect(() => {
-        socket.on("new_order", (data) => {
+        socket.on("foodpanda_order_received", (data) => {
             console.log("order token: ", data);
             dispatch(getOrders());
         })
-    }, [socket])
+    }, [socket, dispatch])
     useEffect(() => {
         dispatch(getOrders());
     }, [dispatch])
     useEffect(() => {
-    console.log("Orders: ", orders);
-  }, [orders]);
+        console.log("Orders: ", orders);
+    }, [orders]);
+    useEffect(() => {
+        console.log("Component mounted");
+        return () => console.log("Component unmounted");
+    }, [])
+
+    if (loading) {
+        return (
+            <div className="flex flex-col gap-4 justify-between p-4">
+                <div className="w-full flex p-2 items-center justify-center border-black">
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <StatsPlaceholder/>
+                        <StatsPlaceholder/>
+                        <StatsPlaceholder/>
+                        <StatsPlaceholder/>
+                    </div>
+                </div>
+                <div className="flex items-center justify-center p-4 overflow-y-auto border-black">
+                    <div className="w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {Array.from({ length: 8 }).map((_, index) => (
+                            <FPPlaceholderCard key={index} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+
+    }
     return (
         <div className="flex flex-col gap-4 justify-between p-4">
             <div className="w-full flex p-2 items-center justify-center border-black">
@@ -32,10 +60,10 @@ const Foodpanda = () => {
                 </div>
             </div>
             <div className="flex items-center justify-center p-4 overflow-y-auto border-black">
-                <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {orders &&
                         orders.map((order, index) => (
-                            <OrderCard key={index} order={order} />
+                            <OrderCard key={index} order={order} platform="foodpanda" />
                         ))}
                 </div>
             </div>

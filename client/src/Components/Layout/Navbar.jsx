@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { getToken } from '../../utils/helper';
 import { LogOut } from 'lucide-react';
-import { logout } from '../../../../frontend/src/redux/action/userActions';
+import { logout } from '../../redux/action/userActions';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 

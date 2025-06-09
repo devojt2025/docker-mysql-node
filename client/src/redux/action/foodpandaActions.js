@@ -6,10 +6,6 @@ const VITE_APP_URL = import.meta.env.VITE_APP_URL;
 export const getOrders = createAsyncThunk(
     'order/getOrders',
     async(query, thunkAPI) => {
-        // const token = await getToken();
-        // if (!token) {
-        //     throw new Error('No token available');
-        // }
         const config = {
             headers: {
                 'X-Forwarded-For': '::1'

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import logo from '../assets/images/gnx_logo_transparent.png'
-import { login } from '../../../frontend/src/redux/action/userActions'
+import { login } from '../redux/action/userActions'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Components/Layout/Loader'
-import { resetError } from '../../../frontend/src/redux/slice/userSlice'
+import { resetError } from '../redux/slice/userSlice'
 import { useNavigate } from 'react-router-dom'
 const Login = () => {
     const dispatch = useDispatch();

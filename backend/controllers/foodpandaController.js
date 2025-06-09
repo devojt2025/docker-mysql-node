@@ -222,7 +222,7 @@ export const receiveOrder = async (req, res) => {
         await insertToppingRecursive(topping, orderline.id);
       }
     }
-    req.io.emit('new_order', req.body.token);
+    req.io.emit('foodpanda_order_received', req.body.token);
     res.status(201).json({ message: "Order received and saved." });
   } catch (err) {
     console.error("Order processing failed:", err);
@@ -245,11 +245,13 @@ export const getOrders = async (req, res) => {
 
       return {
         id: order.id,
+        platform: 'foodpanda',
         raw_payload: parsedPayload
       };
     });
-
+    const count = payload.length;
     res.status(200).json({
+      count,
       payload
     })
   } catch (err) {
