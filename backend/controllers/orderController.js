@@ -6,8 +6,9 @@ import OrderlineToppings from "../models/OrderlineToppings.js";
 import ToppingDiscounts from "../models/ToppingDiscount.js";
 import Sponsorships from "../models/Sponsorships.js";
 import DeliveryFee from "../models/DeliveryFee.js";
-import sequelize from "../config/database.js";
+import {getSequelizeInstance} from '../config/database.js';
 
+const sequelize = getSequelizeInstance({database: 'foodpanda'});
 // util to get client IP
 const getClientIP = (req) => {
   return req.headers["x-forwarded-for"] || req.connection.remoteAddress;
