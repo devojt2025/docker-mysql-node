@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getOrders } from '../action/foodpandaActions';
 
 const foodpandaSlice = createSlice({
-  name: 'orders',
+  name: 'foodpanda',
   initialState: {
     orders: [],
     count: 0,

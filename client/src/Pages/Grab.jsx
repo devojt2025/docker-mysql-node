@@ -7,15 +7,26 @@ import OrderCard from '../Components/Cards/OrderCard'
 import GrabOrderCard from '../Components/Cards/GrabOrderCard'
 import StatsPlaceholder from '../Components/Cards/StatsPlaceholder'
 import GPlaceholderCard from '../Components/Cards/GPlaceholderCard'
+import grabLogo from '../assets/images/grab.jpg'
 const Grab = () => {
     const dispatch = useDispatch();
     const { orders, loading, error } = useSelector((state) => state.grab);
     useEffect(() => {
-        socket.on("grab_order_received", (data) => {
+        const handleOrderReceived = (data) => {
             console.log("order token: ", data);
+            toast.info("New Grab Order Received", {
+                style: { backgroundColor: '#4CAF50', color: 'white' },
+                icon: <img src={grabLogo} />,
+            });
             dispatch(getOrders());
-        })
-    }, [socket, dispatch])
+        };
+        socket.off("grab_order_received");
+        socket.on("grab_order_received", handleOrderReceived);
+
+        return () => {
+            socket.off("grab_order_received", handleOrderReceived);
+        };
+    }, [])
     useEffect(() => {
         dispatch(getOrders());
     }, [dispatch])

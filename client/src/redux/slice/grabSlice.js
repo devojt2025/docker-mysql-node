@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getOrders } from '../action/grabActions';
 
 const grabSlice = createSlice({
-  name: 'orders',
+  name: 'grab',
   initialState: {
     orders: [],
     count: 0,

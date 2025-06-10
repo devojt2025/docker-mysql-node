@@ -4,7 +4,7 @@ import axios from 'axios';
 const VITE_APP_URL = import.meta.env.VITE_APP_URL;
 
 export const getOrders = createAsyncThunk(
-    'order/getOrders',
+    'grab/getOrders',
     async(query, thunkAPI) => {
         const config = {
             headers: {

@@ -6,16 +6,27 @@ import socket from '../socket'
 import OrderCard from '../Components/Cards/OrderCard'
 import FPPlaceholderCard from '../Components/Cards/FPPlaceholderCard'
 import StatsPlaceholder from '../Components/Cards/StatsPlaceholder'
-
+import { toast } from 'sonner'
+import foodpandaLogo from '../assets/images/foodpanda.png'
 const Foodpanda = () => {
     const dispatch = useDispatch();
     const { orders, loading, error } = useSelector((state) => state.foodpanda);
     useEffect(() => {
-        socket.on("foodpanda_order_received", (data) => {
+        const handleOrderReceived = (data) => {
             console.log("order token: ", data);
+            toast.info("New Foodpanda Order Received", {
+                style: { backgroundColor: '#f43098', color: 'white' },
+                icon: <img src={foodpandaLogo} />,
+            });
             dispatch(getOrders());
-        })
-    }, [socket, dispatch])
+        };
+        socket.off("foodpanda_order_received");
+        socket.on("foodpanda_order_received", handleOrderReceived);
+
+        return () => {
+            socket.off("foodpanda_order_received", handleOrderReceived);
+        };
+    }, [])
     useEffect(() => {
         dispatch(getOrders());
     }, [dispatch])
@@ -32,10 +43,10 @@ const Foodpanda = () => {
             <div className="flex flex-col gap-4 justify-between p-4">
                 <div className="w-full flex p-2 items-center justify-center border-black">
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <StatsPlaceholder/>
-                        <StatsPlaceholder/>
-                        <StatsPlaceholder/>
-                        <StatsPlaceholder/>
+                        <StatsPlaceholder />
+                        <StatsPlaceholder />
+                        <StatsPlaceholder />
+                        <StatsPlaceholder />
                     </div>
                 </div>
                 <div className="flex items-center justify-center p-4 overflow-y-auto border-black">
