@@ -12,19 +12,14 @@ const Foodpanda = () => {
     const dispatch = useDispatch();
     const { orders, loading, error } = useSelector((state) => state.foodpanda);
     useEffect(() => {
-        const handleOrderReceived = (data) => {
-            console.log("order token: ", data);
-            toast.info("New Foodpanda Order Received", {
-                style: { backgroundColor: '#f43098', color: 'white' },
-                icon: <img src={foodpandaLogo} />,
-            });
+        const handleFoodpandaOrderUpdate = (data) => {
             dispatch(getOrders());
         };
-        socket.off("foodpanda_order_received");
-        socket.on("foodpanda_order_received", handleOrderReceived);
+        socket.off("foodpanda_order_received", handleFoodpandaOrderUpdate);
+        socket.on("foodpanda_order_received", handleFoodpandaOrderUpdate);
 
         return () => {
-            socket.off("foodpanda_order_received", handleOrderReceived);
+            socket.off("foodpanda_order_received", handleFoodpandaOrderUpdate);
         };
     }, [])
     useEffect(() => {

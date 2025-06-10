@@ -13,21 +13,18 @@ const Grab = () => {
     const dispatch = useDispatch();
     const { orders, loading, error } = useSelector((state) => state.grab);
     useEffect(() => {
-        const handleOrderReceived = (data) => {
-            console.log("order token: ", data);
-            toast.info("New Grab Order Received", {
-                style: { backgroundColor: '#4CAF50', color: 'white' },
-                icon: <img src={grabLogo} />,
-            });
+        const handleGrabOrderUpdate = (data) => {
             dispatch(getOrders());
         };
-        socket.off("grab_order_received");
-        socket.on("grab_order_received", handleOrderReceived);
+
+        socket.off("grab_order_received", handleGrabOrderUpdate);
+        socket.on("grab_order_received", handleGrabOrderUpdate);
 
         return () => {
-            socket.off("grab_order_received", handleOrderReceived);
+            socket.off("grab_order_received", handleGrabOrderUpdate);
         };
-    }, [])
+    }, []);
+
     useEffect(() => {
         dispatch(getOrders());
     }, [dispatch])

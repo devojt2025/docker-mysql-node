@@ -4,11 +4,12 @@ import SimpleCard from '../Components/Cards/SimpleCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../redux/action/foodpandaActions';
 import { getOrders as getGrabOrders } from '../redux/action/grabActions';
-import grabLogo from '../assets/images/grab.jpg'
+
 const ordersToDisplay = placeholder;
 import socket from '../socket';
 import { toast } from 'sonner';
 import foodpandaLogo from '../assets/images/foodpanda.png'
+import grabLogo from '../assets/images/grab.jpg'
 import SimpleGrabCard from '../Components/Cards/SimpleGrabCard';
 const Home = () => {
     const dispatch = useDispatch();
@@ -16,38 +17,26 @@ const Home = () => {
     const { orders: grabOrders, count: grabCount, loading: grabLoading, error: grabError } = useSelector((state) => state.grab);
     useEffect(() => {
         console.log("Effect mounted");
-        const handleOrderReceived = (data) => {
-            console.log("order token: ", data);
-            toast.info("New Foodpanda Order Received", {
-                style: { backgroundColor: '#f43098', color: 'white' },
-                icon: <img src={foodpandaLogo} />,
-            });
-            dispatch(getOrders());
+
+        const getFoodpandaOrder = (data) => {
+            dispatch(getOrders())
         };
 
-        socket.off("foodpanda_order_received");
-        socket.on("foodpanda_order_received", handleOrderReceived);
+        const getGrabOrder = (data) => {
+            dispatch(getGrabOrders())
+        };
 
-        return () => {
-            socket.off("foodpanda_order_received", handleOrderReceived);
-        };
-    }, [])
-    useEffect(() => {
-        const handleOrderReceived = (data) => {
-            console.log("order token: ", data);
-            toast.info("New Grab Order Received", {
-                style: { backgroundColor: '#4CAF50', color: 'white' },
-                icon: <img src={grabLogo} />,
-            });
-            dispatch(getGrabOrders());
-        };
-        socket.off("grab_order_received");
-        socket.on("grab_order_received", handleOrderReceived);
+        socket.off("foodpanda_order_received", getFoodpandaOrder);
+        socket.on("foodpanda_order_received", getFoodpandaOrder);
+
+        socket.off("grab_order_received", getGrabOrder);
+        socket.on("grab_order_received", getGrabOrder);
 
         return () => {
-            socket.off("grab_order_received", handleOrderReceived);
+            socket.off("foodpanda_order_received", getFoodpandaOrder);
+            socket.off("grab_order_received", getGrabOrder);
         };
-    }, [])
+    }, []);
     useEffect(() => {
         dispatch(getOrders());
         dispatch(getGrabOrders());
