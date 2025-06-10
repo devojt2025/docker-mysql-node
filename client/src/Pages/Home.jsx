@@ -94,14 +94,14 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <button className="btn btn-primary fixed bottom-4 right-4 z-50" onClick={() => {
+            {/* <button className="btn btn-primary fixed bottom-4 right-4 z-50" onClick={() => {
                 toast.info("New Grab Order Received", {
                     style: { backgroundColor: '#4CAF50', color: 'white' },
                     icon: <img src={grabLogo} />,
                 });
             }}>
                 Refresh Orders
-            </button>
+            </button> */}
         </>
     )
 }
