@@ -8,6 +8,7 @@ import GrabOrderCard from '../Components/Cards/GrabOrderCard'
 import StatsPlaceholder from '../Components/Cards/StatsPlaceholder'
 import GPlaceholderCard from '../Components/Cards/GPlaceholderCard'
 import grabLogo from '../assets/images/grab.jpg'
+import { toast } from 'sonner'
 const Grab = () => {
     const dispatch = useDispatch();
     const { orders, loading, error } = useSelector((state) => state.grab);
@@ -71,13 +72,9 @@ const Grab = () => {
             </div>
             <div className="flex items-center justify-center p-4 overflow-y-auto border-black">
                 <div className="w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {orders && orders.length > 0 ? (
-                        orders.map((order, index) => (
-                            <GrabOrderCard key={index} order={order} />
-                        ))
-                    ) : (
-                        <p>No orders yet</p> // Optional: show nothing or loading text
-                    )}
+                    {orders && orders.map((order, index) => (
+                        <GrabOrderCard key={index} order={order} />
+                    ))}
                 </div>
             </div>
         </div>
